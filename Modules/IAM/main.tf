@@ -19,7 +19,10 @@ resource "aws_iam_role_policy" "upload_policy" {
     Statement = [{
       Effect = "Allow",
       Action = ["s3:PutObject"],
-      Resource = "${var.bucket}/*"
+      Resource = [
+        "arn:aws:s3:::${var.bucket}",
+        "arn:aws:s3:::${var.bucket}/*"
+      ]
     }]
   })
 }
@@ -46,11 +49,18 @@ resource "aws_iam_role_policy" "crop_policy" {
       {
         Effect = "Allow",
         Action = ["s3:GetObject", "s3:PutObject"],
-        Resource = "${var.bucket}/*"
+        Resource = [
+          "arn:aws:s3:::${var.bucket}",
+          "arn:aws:s3:::${var.bucket}/*"
+        ]
       },
       {
         Effect = "Allow",
-        Action = ["sqs:*"],
+        Action = [
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes"
+        ],
         Resource = "*"
       }
     ]
