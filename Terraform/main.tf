@@ -4,18 +4,18 @@ module "sqs" {
   project = var.project
 }
 
-module "s3" {
-  source     = "../Modules/s3"
+module "S3" {
+  source     = "../Modules/S3"
   env        = var.env
   project    = var.project
-  queue_arn  = module.sqs.queue_arn
+  sqs_queue_arn = module.sqs.queue_arn
 }
 
 module "iam" {
   source  = "../Modules/iam"
   env     = var.env
   project = var.project
-  bucket  = module.s3.bucket_name
+  bucket  = module.S3.bucket_name
 }
 
 module "lambda" {
@@ -23,7 +23,7 @@ module "lambda" {
   env     = var.env
   project = var.project
 
-  bucket_name = module.s3.bucket_name
+  bucket_name = module.S3.bucket_name
   queue_arn   = module.sqs.queue_arn
 
   upload_role = module.iam.upload_role_arn

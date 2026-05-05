@@ -1,3 +1,5 @@
 variable "env" {}
 variable "project" {}
-variable "queue_arn" {}
+variable "sqs_queue_arn" {
+  type = string
+}
