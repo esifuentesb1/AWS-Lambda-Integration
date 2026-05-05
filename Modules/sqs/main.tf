@@ -10,3 +10,25 @@ resource "aws_sqs_queue" "main" {
     maxReceiveCount     = 3
   })
 }
+resource "aws_sqs_queue_policy" "allow_s3" {
+  queue_url = aws_sqs_queue.main.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Principal = {
+          Service = "s3.amazonaws.com"
+        },
+        Action = "sqs:SendMessage",
+        Resource = aws_sqs_queue.main.arn,
+        Condition = {
+          ArnLike = {
+            "aws:SourceArn" = "arn:aws:s3:::${var.project}-${var.env}-images"
+          }
+        }
+      }
+    ]
+  })
+}
