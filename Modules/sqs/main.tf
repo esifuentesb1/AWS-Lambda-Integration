@@ -10,8 +10,9 @@ resource "aws_sqs_queue" "main" {
     maxReceiveCount     = 3
   })
 }
+
 resource "aws_sqs_queue_policy" "allow_s3" {
-  queue_url = aws_sqs_queue.main.id
+  queue_url = aws_sqs_queue.main.url
 
   policy = jsonencode({
     Version = "2012-10-17",
