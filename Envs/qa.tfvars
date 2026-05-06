@@ -1,0 +1,5 @@
+environment = "qa"
+project_name = "procesamiento-imagenes"
+s3_bucket_name = "bucket-imagenes-qa-anthony"
+sqs_name = "cola-procesamiento-qa"
+lambda_runtime = "nodejs18.x"
