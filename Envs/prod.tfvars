@@ -1,0 +1,5 @@
+environment = "prod"
+project_name = "procesamiento-imagenes"
+s3_bucket_name = "bucket-imagenes-prod-anthony"
+sqs_name = "cola-procesamiento-prod"
+lambda_runtime = "nodejs20.x" 
